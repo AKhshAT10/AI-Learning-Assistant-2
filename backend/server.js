@@ -26,17 +26,27 @@ const app = express();
 connectDB();
 
 //middleware to handle cors
-// Allowed frontend origins. Set CLIENT_URL in production (comma-separated
-// to allow more than one, e.g. your Vercel URL + localhost for testing).
+// Allowed frontend origins. Set CLIENT_URL in production (comma-separated to
+// allow more than one, e.g. your Vercel URL + localhost). Use "*" to allow any.
+// Trailing slashes are ignored so a small typo doesn't cause a CORS failure.
+const stripSlash = (s) => s.trim().replace(/\/+$/, "");
 const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
   .split(",")
-  .map((o) => o.trim())
+  .map(stripSlash)
   .filter(Boolean);
+const allowAllOrigins = allowedOrigins.includes("*");
 
 app.use(
   cors({
-    origin: allowedOrigins,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: (origin, callback) => {
+      // allow non-browser clients (curl, health checks) with no Origin header
+      if (!origin) return callback(null, true);
+      if (allowAllOrigins || allowedOrigins.includes(stripSlash(origin))) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Not allowed by CORS: ${origin}`));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
