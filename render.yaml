@@ -1,0 +1,32 @@
+# Render blueprint for the Preppy backend (Express + MongoDB + Gemini).
+# In Render: New + > Blueprint, point it at this repo. Secrets marked
+# `sync: false` must be filled in the Render dashboard after creation.
+services:
+  - type: web
+    name: preppy-api
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRE
+        value: 30d
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash,gemini-2.0-flash
+      - key: MAX_FILE_SIZE
+        value: "52428800"
+      # --- fill these in the Render dashboard (kept out of git) ---
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: CLIENT_URL # your Vercel frontend URL, e.g. https://preppy.vercel.app
+        sync: false
+      - key: SERVER_URL # this service's own URL, e.g. https://preppy-api.onrender.com
+        sync: false

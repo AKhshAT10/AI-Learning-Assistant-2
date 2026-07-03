@@ -26,9 +26,16 @@ const app = express();
 connectDB();
 
 //middleware to handle cors
+// Allowed frontend origins. Set CLIENT_URL in production (comma-separated
+// to allow more than one, e.g. your Vercel URL + localhost for testing).
+const allowedOrigins = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Vite frontend
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
@@ -49,6 +56,11 @@ app.use('/api/aiRoutes',aiRoutes);
 app.use('/api/quizzes',quizRoutes);
 app.use('/api/progress',progressRoutes);
 
+
+//health check (used by hosting platforms and for quick verification)
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 'ok', service: 'Preppy API' });
+});
 
 app.use(errorHandler);
 
