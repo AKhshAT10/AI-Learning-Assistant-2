@@ -5,7 +5,8 @@ import Spinner from '../../components/common/Spinner';
 import toast from 'react-hot-toast';
 import {ArrowLeft , ExternalLink, LucideBadgeEuro} from 'lucide-react';
 import Tabs from '../../components/common/Tabs';
-import PageHeader from '../../components/common/pageHeader';
+import PageHeader from '../../components/common/PageHeader';
+import { BASE_URL } from '../../utils/apiPaths';
 import ChatInterface from '../../components/chat/ChatInterface';
 import AIActions from '../../components/ai/AIActions';
 import FlashcardManager from '../../components/flashcards/FlashcardManager';
@@ -44,7 +45,7 @@ const DocumentDetailPage = () => {
       return filePath;
     }
 
-    const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+    const baseUrl = BASE_URL;
     return `${baseUrl}${filePath.startsWith('/')?'':'/'}${filePath}`;
   };
 
@@ -59,23 +60,23 @@ const DocumentDetailPage = () => {
     const pdfUrl = getPdfUrl();
 
     return (
-      <div className='bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm' >
-          <div className='flex items-center justify-between p-4 bg-gray-50 border-b border-gray-300'>
-            <span className='text-sm font-medium text-gray-700'>Document Viewer</span>
+      <div className='card overflow-hidden' >
+          <div className='flex items-center justify-between p-4 bg-slate-50/80 border-b border-slate-200/70'>
+            <span className='text-sm font-medium text-slate-700'>Document Viewer</span>
             <a
             href={pdfUrl}
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors'
+            className='inline-flex items-center gap-1.5 text-sm text-brand-600 hover:text-brand-700 font-medium transition-colors'
             >
             <ExternalLink size={16}/>
             Open in new tab
             </a>
           </div>
-          <div className='bg-gray-100 p-1'>
+          <div className='bg-slate-100 p-1'>
             <iframe
             src={pdfUrl}
-            className='w-full h-[70vh] bg-white rounded border border-gray-300'
+            className='w-full h-[70vh] bg-white rounded-xl border border-slate-200/70'
             title='PDF Viewer'
             style={{
               colorScheme: 'light'
@@ -121,7 +122,7 @@ const DocumentDetailPage = () => {
   return (
     <div>
       <div className='mb-4'>
-         <Link to="/documents" className='inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors'>
+         <Link to="/documents" className='inline-flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors'>
             <ArrowLeft size={16}/>
             Back To Documents
          </Link>

@@ -17,15 +17,15 @@ const FlashcardSetCard = ({flashcardSet}) => {
 
 
     return (
-        <div 
-        className='group relative bg-white/80 backdrop-blur-xl border-2 border-slate-200 hover:border-emerald-300 rounded-2xl p-6 cursor-pointer transition-all duration-200 hover:shadow-lg hover:shadow-emerald-500/10 flex flex-col justify-between'
+        <div
+        className='group card card-hover p-6 flex flex-col justify-between cursor-pointer'
         onClick={handleStudyNow}
         >
            <div className='space-y-4'>
               {/*Icon and Title*/}
               <div className='flex items-start gap-4'>
-                 <div className='shrink-0 w-12 h-12 rounded-xl bg-linear-to-br from-emerald-100 to-teal-100 flex items-center justify-center'>
-                    <BookOpen className='w-6 h-6 text-emerald-600' strokeWidth={2}/>
+                 <div className='shrink-0 w-12 h-12 rounded-xl bg-linear-to-br from-brand-100 to-brand-50 flex items-center justify-center'>
+                    <BookOpen className='w-6 h-6 text-brand-600' strokeWidth={2}/>
                  </div>
                  <div className='flex-1 min-w-0'>
                    <h3 className='text-base font-semibold text-slate-900 line-clamp-2 mb-1' title={flashcardSet?.documentId?.title}>
@@ -41,13 +41,13 @@ const FlashcardSetCard = ({flashcardSet}) => {
               <div className='flex items-center gap-3 pt-2'>
                  <div className='px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg'>
                     <span className='text-sm font-semibold text-slate-700'>
-                        {totalCards}{totalCards===1 ? 'Card' : 'Cards'}
+                        {totalCards}{' '}{totalCards===1 ? 'Card' : 'Cards'}
                     </span>
                  </div>
                  {reviewedCount > 0 && (
-                    <div className='flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg'>
-                       <TrendingUp className='w-3.5 h-3.5 text-emerald-600' strokeWidth={2.5}/>
-                       <span className='text-sm font-semibold text-emerald-700'>
+                    <div className='flex items-center gap-1.5 px-3 py-1.5 bg-brand-50 border border-brand-200 rounded-lg'>
+                       <TrendingUp className='w-3.5 h-3.5 text-brand-600' strokeWidth={2.5}/>
+                       <span className='text-sm font-semibold text-brand-700'>
                         {progressPercentage}%
                        </span>
                     </div>
@@ -64,8 +64,8 @@ const FlashcardSetCard = ({flashcardSet}) => {
                         </span>
                     </div>
                     <div className='relative h-2 bg-slate-100 rounded-full overflow-hidden'>
-                        <div 
-                        className='absolute inset-y-0 left-0 bg-linear-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out' 
+                        <div
+                        className='absolute inset-y-0 left-0 bg-linear-to-r from-brand-500 to-brand-teal rounded-full transition-all duration-500 ease-out'
                         style={{width: `${progressPercentage}%`}}
                         />
                     </div>
@@ -80,7 +80,7 @@ const FlashcardSetCard = ({flashcardSet}) => {
                   e.stopPropagation();
                   handleStudyNow();
                }}
-               className='group/btn relative w-full h-11 bg-linear-to-r from-emerald-50 to-teal-100 hover;from-emerald-600 hover:to-teal-600 text-emerald-700 hover:text-white font-semibold text-sm rounded-xl transition-all duration-200 active:scale-95 overflow-hidden'
+               className='group/btn relative w-full h-11 bg-linear-to-r from-brand-50 to-brand-100 hover:from-brand-500 hover:to-brand-teal text-brand-700 hover:text-white font-semibold text-sm rounded-xl transition-all duration-200 active:scale-95 overflow-hidden'
                >
                 <span className='relative z-10 flex items-center justify-center gap-2'>
                    <Sparkles className='w-4 h-4' strokeWidth={2.5}/>

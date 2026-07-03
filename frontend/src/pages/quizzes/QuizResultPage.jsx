@@ -53,7 +53,7 @@ const incorrectAnswers = totalQuestions - correctAnswers;
 const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
 
   const getScoreColor = (score) => {
-    if(score>=80) return 'from-emerald-500 to-teal-500';
+    if(score>=80) return 'from-brand-500 to-brand-teal';
     if(score>=60) return 'from-amber-500 to-orange-500';
     return 'from-rose-500 to-red-500'
   };
@@ -72,7 +72,7 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
        <div className='mb-6'>
            <Link
            to={`/documents/${quiz.document._id}`}
-           className='group inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-emerald-600 transition-colors duration-200'
+           className='group inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors duration-200'
            >
            <ArrowLeft className='w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200' strokeWidth={2}/>
            Back To Document
@@ -82,10 +82,10 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
        <PageHeader title={`${quiz.title || 'Quiz'} Results`}/>
 
        {/*Score Card*/}
-       <div className='bg-white/80 backdrop-blur-xl border-2 border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50 p-8 mb-8'>
+       <div className='card p-8 mb-8'>
           <div className='text-center space-y-6'>
-             <div className='inline-flex items-center justify-center w-15 h-15 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 shadow-lg shadow-emerald-500/25'>
-                 <Trophy className='w-7 h-7 text-emerald-600' strokeWidth={2}/>
+             <div className='inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-linear-to-br from-brand-100 to-brand-50 shadow-lg shadow-brand-500/25'>
+                 <Trophy className='w-7 h-7 text-brand-600' strokeWidth={2}/>
              </div>
 
              <div>
@@ -109,9 +109,9 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
                     {totalQuestions} Total
                    </span>
                 </div>
-                <div className='flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-xl'>
-                    <CheckCircle2 className='w-4 h-4 text-emerald-600' strokeWidth={2}/>
-                    <span className='text-sm font-semibold text-emerald-700'>
+                <div className='flex items-center gap-2 px-4 py-2 bg-brand-50 border border-brand-200 rounded-xl'>
+                    <CheckCircle2 className='w-4 h-4 text-brand-600' strokeWidth={2}/>
+                    <span className='text-sm font-semibold text-brand-700'>
                       {correctAnswers} Correct
                     </span>
                 </div>
@@ -148,8 +148,8 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
             return (
               <div 
               key={index}
-              className='bg-white/80 backdrop-blur-xl border-2 border-slate-200 rounded-2xl p-6 shadow-lg shadow-slate-200/50'>
-                <div className='flex items-start justify-betwee gap-4 mb-3'>
+              className='card p-6'>
+                <div className='flex items-start justify-between gap-4 mb-3'>
                   <div className='flex-1'>
                     <div className='inline-flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-200 rounded-lg mb-3'>
                       <span className='text-xs font-semibold text-slate-600'>Question {index+1}</span>
@@ -160,11 +160,11 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
                   </div>
                   <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
                     isCorrect
-                    ? 'bg-emerald-50 border-2 border-emerald-200'
+                    ? 'bg-brand-50 border-2 border-brand-200'
                     : 'bg-rose-50 border-2 border-rose-200'
                   }`}>
                     {isCorrect ? (
-                      <CheckCircle2 className='w-5 h-5 text-emerald-600' strokeWidth={2.5}/>
+                      <CheckCircle2 className='w-5 h-5 text-brand-600' strokeWidth={2.5}/>
                     ) : (
                       <XCircle className='w-5 h-5 text-rose-600' strokeWidth={2.5}/>
                     )}
@@ -182,7 +182,7 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
                       key={optIndex}
                       className={`relative px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                         isCorrectOption
-                        ? 'bg-emerald-50 border-emerald-300 shadow-lg shadow-emerald-500/10'
+                        ? 'bg-brand-50 border-brand-300 shadow-lg shadow-brand-500/10'
                         : isWrongAnswer
                         ? 'bg-rose-50 border-rose-300'
                         : 'bg-slate-50 border-slate-200'
@@ -191,7 +191,7 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
                         <div className='flex items-center justify-between gap-3'>
                           <span className={`text-sm font-medium ${
                             isCorrectOption
-                            ? 'text-emerald-900'
+                            ? 'text-brand-900'
                             : isWrongAnswer
                             ? 'text-rose-900'
                             : 'text-slate-700'
@@ -199,7 +199,7 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
                           </span>
                           <div className='flex items-center gap-2'>
                               {isCorrectOption && (
-                                <span className='inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 border border-emerald-300 rounded-lg text-xs font-semibold text-emerald-700'>
+                                <span className='inline-flex items-center gap-1 px-2 py-1 bg-brand-100 border border-brand-300 rounded-lg text-xs font-semibold text-brand-700'>
                                   <CheckCircle2 className='w-3 h-3' strokeWidth={2.5}/>
                                   Correct
                                 </span>
@@ -244,12 +244,12 @@ const score = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) 
        {/*Action Button*/}
        <div className='mt-8 flex justify-center'>
          <Link to={`/documents/${quiz.document._id}`}>
-           <button className='group relative px-8 h-12 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 active:scale-95 overflow-hidden'>
+           <button className='group relative px-8 h-12 bg-linear-to-r from-brand-500 to-brand-teal hover:from-brand-600 hover:to-brand-teal text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 active:scale-95 overflow-hidden'>
              <span className='relative z-10 flex items-center gap-2'>
               <ArrowLeft className='w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200' strokeWidth={2.5}/>
               Return to document
              </span>
-             <div className='absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transfrom duration-700'/>
+             <div className='absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700'/>
            </button>
          </Link>
        </div>

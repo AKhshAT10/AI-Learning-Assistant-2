@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router , Routes , Route , Navigate} from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/Auth/LoginPage';
 import RegisterPage from './pages/Auth/RegisterPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -19,16 +20,18 @@ const App = () => {
 
   if(loading){
     return(
-        <div className='flex items-center justify-center h-screen'><p>Loading...</p></div>
+        <div className='flex items-center justify-center h-screen bg-canvas'>
+          <span className='inline-block h-8 w-8 rounded-full border-[3px] border-brand-500/25 border-t-brand-500 animate-spin' />
+        </div>
     );
   }
 
   return(
     <Router>
       <Routes>
-        <Route path='/' element={isAuthenticated ? <Navigate to="/dashboard" replace/> : <Navigate to="/login" replace/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/login' element={isAuthenticated ? <Navigate to="/dashboard" replace/> : <LoginPage/>}/>
+        <Route path='/register' element={isAuthenticated ? <Navigate to="/dashboard" replace/> : <RegisterPage/>}/>
 
         {/*ProtectedRoute*/}
         <Route element={<ProtectedRoute/>}>

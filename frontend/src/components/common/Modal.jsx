@@ -1,33 +1,53 @@
-import React from 'react';
-import {X} from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X } from 'lucide-react';
 
-const Modal = ({isOpen,onClose,title,children}) => {
-    
-    if(!isOpen) return null;
+const Modal = ({ isOpen, onClose, title, children }) => {
+    useEffect(() => {
+        if (!isOpen) return;
+        const onKey = (e) => e.key === 'Escape' && onClose?.();
+        window.addEventListener('keydown', onKey);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            window.removeEventListener('keydown', onKey);
+            document.body.style.overflow = '';
+        };
+    }, [isOpen, onClose]);
+
+    if (!isOpen) return null;
 
     return (
         <div className='fixed inset-0 z-50 overflow-y-auto'>
-           <div className='flex items-center justify-center min-h-screen px-4 py-8'>
-                 <div className='fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity'>
-                 </div>
-                 <div className='relative w-full max-w-lg bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-2xl shadow-slate-900/20 p-8 z-10 animate-in fade-in slide-in-from-bottom-4 duration-300'>
-                    <button
+            <div className='flex min-h-screen items-center justify-center px-4 py-8'>
+                <div
+                    className='fixed inset-0 bg-slate-900/40 backdrop-blur-sm'
                     onClick={onClose}
-                    className='absolute top-6 right-6 w-8 h-8 flex ites=ms-center justify-center rounded-lg text-slate-400 hover:text-slate-100 transition-all duration-200'
+                    aria-hidden='true'
+                />
+                <div
+                    className='card relative z-10 w-full max-w-lg p-8'
+                    style={{ animation: 'rise 0.3s var(--ease-soft) both' }}
+                    role='dialog'
+                    aria-modal='true'
+                >
+                    <button
+                        onClick={onClose}
+                        aria-label='Close'
+                        className='absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700'
                     >
-                    <X className='w-5 h-5' strokeWidth={2}/>
+                        <X className='h-5 w-5' strokeWidth={2} />
                     </button>
-                    <div className='mb-6 pr-8'>
-                      <h3 className='text-xl font-medium text-slate-900 tracking-tight'>
-                         {title}
-                      </h3>
-                    </div>
-
+                    {title && (
+                        <div className='mb-6 pr-10'>
+                            <h3 className='text-xl font-semibold tracking-tight text-slate-900'>
+                                {title}
+                            </h3>
+                        </div>
+                    )}
                     <div>{children}</div>
-                 </div>
-           </div>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default Modal;

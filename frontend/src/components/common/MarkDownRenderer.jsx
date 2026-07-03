@@ -14,7 +14,7 @@ const MarkDownRenderer = ({content}) => {
             h3: ({node,...props}) => <h3 className='text-md font-bold mt-3 mb-2' {...props}/>,
             h4: ({node,...props}) => <h4 className='text-sm font-bold mt-3 mb-1' {...props}/>,
             p: ({node,...props}) => <p className='mb-2 leading-relaxed' {...props}/>,
-            a: ({node,...props}) => <h1 className='text-[#00d492] hover:underline' {...props}/>,
+            a: ({node,...props}) => <a className='text-brand-600 font-medium hover:underline' target='_blank' rel='noopener noreferrer' {...props} />,
             ul: ({node,...props}) => <ul className='list-disc list-inside mb-2 ml-4' {...props}/>,
             ol: ({node,...props}) => <ol className='list-decimal list-inside mb-2 ml-4' {...props}/>,
             li: ({node,...props}) => <li className='mb-1' {...props}/>,

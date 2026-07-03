@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import documentService from '../../services/documentService.js';
 import Spinner from '../../components/common/Spinner.jsx';
 import Button from '../../components/common/Buttons.jsx';
+import PageHeader from '../../components/common/PageHeader.jsx';
 import DocumentCard from '../../components/documents/DocumentCard.jsx';
 
 const DocumentListPage = () => {
@@ -136,7 +137,7 @@ const DocumentListPage = () => {
             </p>
             <button
             onClick={()=>setIsUploadModalOpen(true)}
-            className='inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]'
+            className='btn btn-primary btn-lg'
             >
              <Plus className='w-4 h-4' strokeWidth={2.5}/>
              Upload Document
@@ -160,36 +161,23 @@ const DocumentListPage = () => {
   );
 };
   return (
-  <div className='relative min-h-screen'>
+  <div>
 
-    {/* Subtle background pattern */}
-    <div className='absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:16px_16px] opacity-30 pointer-events-none'></div>
+    <PageHeader
+      title='My Documents'
+      subtitle='Manage and organize your learning materials'
+    >
+      <Button onClick={() => setIsUploadModalOpen(true)}>
+        <Plus className='w-4 h-4' strokeWidth={2.5} />
+         Upload Document
+      </Button>
+    </PageHeader>
 
-    <div className='relative max-w-7xl mx-auto py-10 px-4'>
+    {renderContent()}
 
-      {/* Header */}
-      <div className='flex items-center justify-between mb-10'>
-        <div>
-          <h1 className='text-2xl font-medium text-slate-900 tracking-tight mb-2'>
-            My Documents
-          </h1>
-          <p className='text-slate-500 text-sm'>
-            Manage and organize your learning materials
-          </p>
-        </div>
-
-        <Button onClick={() => setIsUploadModalOpen(true)}>
-          <Plus className='w-4 h-4' strokeWidth={2.5} />
-           Upload Document
-        </Button>
-      </div>
-
-      {renderContent()}
-    </div>
-
-    {isUploadModalOpen && 
+    {isUploadModalOpen &&
     (<div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm'>
-       <div className='relative w-full max-w-lg bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-2xl shadow-slate-900/20 p-8'>
+       <div className='card relative w-full max-w-lg p-8'>
            {/*Close Button*/}
            <button
            onClick={()=> setIsUploadModalOpen(false)}
@@ -212,7 +200,7 @@ const DocumentListPage = () => {
            <form onSubmit={handleUpload} className='space-y-5'>
                {/*Title Input*/}
                <div className='space-y-2'>
-                   <label className='block text-xs font-semibold text-slate-700 uppercase tracking-wide'>
+                   <label className='label'>
                         Document Title
                    </label>
                    <input
@@ -220,17 +208,17 @@ const DocumentListPage = () => {
                    value={uploadTitle}
                    onChange={(e)=> setUploadTitle(e.target.value)}
                    required
-                   className='w-full h-12 px-4 border-2 border-slate-200 rounded-xl bg-slate-50/50 text-slate-900 placeholder-slate-400 text-sm font-medium transition-all duration-200 focus:otline-none focus:border-emerald-500 focus:bg-white focus:shadow-lg focus:shadow-emerald-500/10'
+                   className='input'
                    placeholder='e.g., React Interview Prep'
                    />
                </div>
 
                {/*File Upload*/}
                <div className='space-y-2'>
-                   <label className='block text-xs font-semibold text-slate-700 uppercase tracking-wide'>
+                   <label className='label'>
                         PDF File
                    </label>
-                   <div className='relative border-2 border-dashed border-slate-300 rounded-xl bg-slate-50/50 hover:border-emerald-400 hover:bg-emerald-50/30 transition-all duration-200'>
+                   <div className='relative border-2 border-dashed border-slate-300 rounded-xl bg-slate-50/50 hover:border-brand-400 hover:bg-brand-50/30 transition-all duration-200'>
                        <input
                        id='file-upload'
                        type='file'
@@ -239,20 +227,20 @@ const DocumentListPage = () => {
                        accept='.pdf'
                        />
                        <div className='flex flex-col items-center justify-center py-10 px-6'>
-                        <div className='w-14 h-14 rounded-xl bg-linear-to-r from-emerald-500 to-teal-100 flex items-center justify-center mb-4'>
+                        <div className='w-14 h-14 rounded-xl bg-gradient-to-br from-brand-500 to-brand-teal flex items-center justify-center mb-4'>
                             <Upload
-                            className='w-7 h-7 text-emerald-600'
+                            className='w-7 h-7 text-white'
                             strokeWidth={2}
                             />
                         </div>
                         <p className='text-sm font-medium text-slate-700 mb-1'>
                            {uploadFile ? (
-                            <span className='text-emerald-600' >
+                            <span className='text-brand-600' >
                                 {uploadFile.name}
                             </span>
                            ): (
                             <>
-                            <span className='text-emerald-600'>
+                            <span className='text-brand-600'>
                                 Click to upload
                             </span>{' '}
                             or drag and drop
@@ -270,7 +258,7 @@ const DocumentListPage = () => {
                    type='button'
                    onClick={()=> setIsUploadModalOpen(false)}
                    disabled={uploading}
-                   className='flex-1 h-11 px-4 border-2 border-slate-200 rounded-xl bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
+                   className='btn btn-outline btn-md flex-1'
                    >
                    Cancel
                    </button>
@@ -278,7 +266,7 @@ const DocumentListPage = () => {
                    <button
                    type='submit'
                    disabled={uploading}
-                   className='flex-1 h-11 px-4 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]'
+                   className='btn btn-primary btn-md flex-1'
                    >
                       {uploading ? (
                         <span className='flex items-center justify-center gap-2'>
@@ -295,7 +283,7 @@ const DocumentListPage = () => {
     </div>)}
 
     {isDeleteModalOpen &&<div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm'>
-         <div className='relative w-full max-w-md bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-2xl shadow-slate-900/20 p-8'>
+         <div className='card relative w-full max-w-md p-8'>
             {/*Close Button*/}
             <button
             onClick={()=>setIsDeleteModalOpen(false)}
@@ -306,7 +294,7 @@ const DocumentListPage = () => {
 
             {/*Modal Header*/}
             <div className='mb-6'>
-               <div className='w-12 h-12 rounded-xl bg-linear-to-r from-red-100 to-red-200 flex items-center justify-center mb-4'>
+               <div className='w-12 h-12 rounded-xl bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center mb-4'>
                    <Trash2 className='w-6 h-6 text-red-600' strokeWidth={2}/>
                </div>
                <h2 className='text-xl font-medium text-slate-900 tracking-tight'>
@@ -329,14 +317,14 @@ const DocumentListPage = () => {
                 type='button'
                 onClick={()=> setIsDeleteModalOpen(false)}
                 disabled={deleting}
-                className='flex-1 h-11 px-4 border-2 border-slate-200 rounded-xl bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed'
+                className='btn btn-outline btn-md flex-1'
                 >
                 Cancel
                 </button>
                 <button
                 onClick={handleConfirmDelete}
                 disabled={deleting}
-                className='flex-1 h-11 px-4 bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-red-500/25 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]'
+                className='btn btn-danger btn-md flex-1'
                 >
                  {deleting ? (
                     <span className='flex items-center justify-center gap-2'>

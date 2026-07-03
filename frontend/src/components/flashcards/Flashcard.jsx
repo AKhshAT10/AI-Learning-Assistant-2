@@ -29,7 +29,7 @@ const Flashcard = ({flashcard,onToggleStar}) => {
                >
                {/*Star Button*/}
                <div className='flex items-start justify-between'>
-                   <div className='bg-slate-100 text-[10px] text-slate-600 rounded px-4 py-1 uppercase'>{flashcard?.difficulty}</div>
+                   <div className='inline-flex items-center rounded-md bg-slate-100 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-600'>{flashcard?.difficulty}</div>
                    <button
                    onClick={(e)=>{
                     e.stopPropagation();
@@ -65,7 +65,7 @@ const Flashcard = ({flashcard,onToggleStar}) => {
 
                {/*Back of the card (Answer)*/}
                <div
-               className='absolute inset-0 w-full h-full bg-linear-to-br from-emerald-500 to-teal-500 border-2 border-emerald-400/60 rounded-2xl shadow-xl shadow-emerald-500/30 p-8 flex flex-col justify-between'
+               className='absolute inset-0 w-full h-full bg-linear-to-br from-brand-500 to-brand-teal border-2 border-brand-400/60 rounded-2xl shadow-xl shadow-brand-500/30 p-8 flex flex-col justify-between'
                style={{
                 backfaceVisibility: 'hidden',
                 WebkitBackfaceVisibility: 'hidden',

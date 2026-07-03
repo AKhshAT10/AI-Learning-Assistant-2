@@ -52,7 +52,7 @@ const FlashCardListPage = () => {
 
   return (
     <div>
-      <PageHeader title="all Flashcard sets"/>
+      <PageHeader title="All Flashcard Sets" subtitle="Review every set you've generated"/>
       {renderContent()}
     </div>
   )

@@ -118,7 +118,7 @@ if (newQuiz._id) {
   };
 
   return (
-    <div className="bg-white border border-neutral-200 rounded-lg p-6">
+    <div className="card p-6">
       <div className="flex justify-end gap-2 mb-4">
         <Button onClick={() => setIsGenerateModalOpen(true)}>
           <Plus size={16} />
@@ -129,10 +129,14 @@ if (newQuiz._id) {
       {renderQuizContent()}
 
       {/* Generate Quiz Modal */}
-      <Modal isOpen={isGenerateModalOpen} onClose={() => setIsGenerateModalOpen(false)}>
+      <Modal
+        isOpen={isGenerateModalOpen}
+        onClose={() => setIsGenerateModalOpen(false)}
+        title="Generate Quiz"
+      >
         <form onSubmit={handleGenerateQuiz} className="space-y-4">
           <div>
-            <label className="block text-xs font-medium text-neutral-700 mb-1.5">
+            <label className="label">
               Number of Questions
             </label>
             <input
@@ -141,7 +145,7 @@ if (newQuiz._id) {
               onChange={(e) => setNumQuestions(Math.max(1, parseInt(e.target.value) || 1))}
               min="1"
               required
-              className="w-full h-9 px-3 border border-neutral-200 rounded-lg bg-white text-sm text-neutral-900 placeholder-neutral-400 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[#00d492] focus:border-transparent"
+              className="input"
             />
           </div>
 
@@ -182,9 +186,9 @@ if (newQuiz._id) {
               Cancel
             </Button>
             <Button
+              variant="danger"
               onClick={handleConfirmDelete}
               disabled={deleting}
-              className="bg-red-500 hover:bg-red-600 active:bg-red-700 focus:ring-red-500"
             >
               {deleting ? 'Deleting...' : 'Delete'}
             </Button>

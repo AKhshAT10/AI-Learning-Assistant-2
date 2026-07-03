@@ -3,13 +3,68 @@ import { GoogleGenAI } from '@google/genai';
 
 dotenv.config();
 
-const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
-
-
 if(!process.env.GEMINI_API_KEY){
-    console.error('FATAL ERROR: GEMEINI_API_KEY is not set in the environment variables');
+    console.error('FATAL ERROR: GEMINI_API_KEY is not set in the environment variables');
     process.exit(1);
 }
+
+const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
+
+/**
+ * Ordered list of models to try. Override with GEMINI_MODEL in .env
+ * (comma-separated). The first is used first; if it is overloaded the
+ * next is tried as a fallback.
+ */
+const MODELS = (process.env.GEMINI_MODEL || 'gemini-2.5-flash,gemini-2.0-flash')
+    .split(',')
+    .map((m) => m.trim())
+    .filter(Boolean);
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// 503 (overloaded), 429 (rate limited) and 500 are transient - worth retrying.
+const isTransient = (error) => {
+    const status = error?.status ?? error?.code;
+    return status === 503 || status === 429 || status === 500;
+};
+
+/**
+ * Call Gemini with automatic backoff retries and model fallback.
+ * Retries transient errors, then moves on to the next model in MODELS.
+ * @param {string|Array} contents - prompt string or SDK contents array
+ * @param {{maxRetries?: number}} [opts]
+ * @returns {Promise<string>} the generated text
+ */
+const generate = async (contents, { maxRetries = 4 } = {}) => {
+    let lastError;
+
+    for (const model of MODELS) {
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await ai.models.generateContent({ model, contents });
+                const text = response.text;
+                if (!text) throw new Error('Empty response from Gemini');
+                return text;
+            } catch (error) {
+                lastError = error;
+
+                // Non-transient (bad key, invalid request, etc.) - fail fast.
+                if (!isTransient(error)) throw error;
+
+                if (attempt < maxRetries) {
+                    const delay = Math.min(1000 * 2 ** attempt, 8000) + Math.floor(Math.random() * 400);
+                    console.warn(
+                        `Gemini "${model}" ${error?.status ?? ''} overloaded - retry ${attempt + 1}/${maxRetries} in ${delay}ms`
+                    );
+                    await sleep(delay);
+                }
+            }
+        }
+        console.warn(`Gemini "${model}" exhausted retries; trying next fallback model if available.`);
+    }
+
+    throw lastError;
+};
 
 /**
  * generate flashcards from text
@@ -17,10 +72,9 @@ if(!process.env.GEMINI_API_KEY){
  * @param {number} count - Number of flashcards to generate
  * @returns {Promise<Array<{question: string, answer: string, difficulty: string}>>}
  */
-
 export const generateFlashcards = async (text,count = 10) => {
     const prompt = `Generate exactly ${count} educational flashcards from the following text.
-    Format each flashcard as: 
+    Format each flashcard as:
     Q: [Clear,specific questions]
     A: [Concise,accurate answer]
     D: [Difficulty level: easy,medium, or hard]
@@ -31,12 +85,7 @@ export const generateFlashcards = async (text,count = 10) => {
     ${text.substring(0,15000)}`;
 
     try{
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash-lite",
-            contents: prompt,
-        });
-
-        const generateText = response.text;
+        const generateText = await generate(prompt);
 
         //Parse the response
         const flashcards = [];
@@ -95,12 +144,7 @@ export const generateQuiz = async (text,numQuestions = 5) => {
     ${text.substring(0,15000)}`;
 
     try{
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash-lite",
-            contents: prompt,
-        });
-
-        const generateText = response.text;
+        const generateText = await generate(prompt);
 
         const questions = [];
         const questionBlocks = generateText.split('---').filter(q=>q.trim());
@@ -144,20 +188,7 @@ Text:
 ${text.substring(0, 20000)}`;
 
     try {
-        const result = await ai.models.generateContent({
-            model: "gemini-2.5-flash-lite",
-            contents: [
-                {
-                    role: "user",
-                    parts: [{ text: prompt }]
-                }
-            ]
-        });
-
-        console.log("Gemini Full Response:", result); // temporary debug
-
-        return result.text;   // ✅ THIS is correct
-
+        return await generate(prompt);
     } catch (error) {
         console.error("Gemini API Error:", error);
         throw new Error("Failed to generate summary");
@@ -173,7 +204,7 @@ export const chatWithContext = async (question,chunks) => {
     const context = chunks.map((c,i)=>`[Chunk ${i+1}]\n${c.content}`).join('\n\n');
 
     const prompt = `Based on the following context from a document, analyse the context and answer the user's questions , if the answer is not in the context say so
-    
+
     Context:
     ${context}
 
@@ -182,13 +213,7 @@ export const chatWithContext = async (question,chunks) => {
     Answer:`;
 
     try{
-       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-lite",
-        contents: prompt,
-       });
-
-       const generatedText = response.text;
-       return generatedText;
+       return await generate(prompt);
     }catch(error){
        console.error('Gemini API error',error);
        throw new Error('Failed to process chat request');
@@ -206,17 +231,12 @@ export const explainConcept = async (concept,context) => {
     const prompt = `Explain the concept of "${concept}" based on the following context.
     provide a clear , educational explanaton thats easy to understand.
     include examples if relevant.
-    
+
     Context:
     ${context.substring(0,10000)}`;
 
     try{
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash-lite",
-            contents: prompt,
-        });
-        const generatedText = response.text;
-        return generatedText;
+        return await generate(prompt);
     }catch(error){
         console.error('Gemini API Error:',error);
         throw new Error('Failed to explain concept');

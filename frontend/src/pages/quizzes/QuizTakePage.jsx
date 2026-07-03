@@ -117,18 +117,18 @@ const handleSubmitQuiz = async () => {
                 </span>
             </div>
             <div className='relative h-2 bg-slate-100 rounded-full overflow-hidden'>
-               <div 
-               className='absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500'
+               <div
+               className='absolute inset-y-0 left-0 bg-gradient-to-r from-brand-500 to-brand-teal rounded-full transition-all duration-500'
                style={{width: `${((currentQuestionIndex+1)/quiz.questions.length)*100}%`}}
                />
             </div>
          </div>
 
          {/*Question Card*/}
-         <div className='bg-white/80 backdrop-blur-xl border-2 border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50 p-6 mb-8'>
-           <div className='inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl mb-6'>
-               <div className='w-2 h-2 bg-emerald-500 rounded-full animate-pulse'></div>
-               <span className='text-sm font-semibold text-emerald-700'>
+         <div className='card p-6 mb-8'>
+           <div className='inline-flex items-center gap-2 px-4 py-2 bg-brand-50 border border-brand-200 rounded-xl mb-6'>
+               <div className='w-2 h-2 bg-brand-500 rounded-full animate-pulse'></div>
+               <span className='text-sm font-semibold text-brand-700'>
                       Question {currentQuestionIndex+1}
                </span>
            </div>
@@ -145,8 +145,8 @@ const handleSubmitQuiz = async () => {
                 <label
                 key={index}
                 className={`group relative flex items-center p-3 border-2 rounded-xl cursor-pointer transition-all duration-200 ${
-                  isSelected 
-                  ? 'border-emerald-500 bg-emerald-50 shadow-lg shadow-emerald-500/10'
+                  isSelected
+                  ? 'border-brand-500 bg-brand-50 shadow-lg shadow-brand-500/10'
                   : 'border-slate-200 bg-slate-50/50 hover:border-slate-300 hover:bg-white hover:shadow-md'
                 }`}
                 >
@@ -161,8 +161,8 @@ const handleSubmitQuiz = async () => {
 
                 <div className={`shrink-0 w-5 h-5 rounded-full border-2 transition-all duration-200 ${
                   isSelected
-                  ? 'border-emerald-500 bg-emerald-500'
-                  : 'border-slate-300 bg-white group-hover:border-emerald-400'
+                  ? 'border-brand-500 bg-brand-500'
+                  : 'border-slate-300 bg-white group-hover:border-brand-400'
                 }`}>
                  {isSelected && (
                   <div className='w-full h-full flex items-center justify-center'>
@@ -172,14 +172,14 @@ const handleSubmitQuiz = async () => {
                 </div>
 
                 <span className={`ml-4 text-sm font-medium transition-colors duration-200 ${
-                  isSelected ? 'text-emerald-900' : 'text-slate-700 group-hover:text-slate-900'
+                  isSelected ? 'text-brand-900' : 'text-slate-700 group-hover:text-slate-900'
                 }`}>
                   {option}
                 </span>
 
                 {isSelected && (
                   <CheckCircle2
-                  className='ml-auto w-5 h-5 text-emerald-500'
+                  className='ml-auto w-5 h-5 text-brand-500'
                   strokeWidth={2.5}
                   />
                 )}
@@ -204,7 +204,7 @@ const handleSubmitQuiz = async () => {
                <button
                onClick={handleSubmitQuiz}
                disabled={submitting}
-               className='group relative px-8 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 overflow-hidden'
+               className='group relative px-8 h-12 bg-gradient-to-r from-brand-500 to-brand-teal hover:from-brand-600 hover:to-brand-teal text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-brand-500/25 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 overflow-hidden'
                >
                 <span className='relative z-10 flex items-center justify-center gap-2'>
                   {submitting ? (
@@ -245,9 +245,9 @@ const handleSubmitQuiz = async () => {
                 disabled={submitting}
                 className={`w-8 h-8 rounded-lg font-semibold text-xs transition-all duration-200 ${
                   isCurrent
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 scale-110'
+                  ? 'bg-gradient-to-r from-brand-500 to-brand-teal text-white shadow-lg shadow-brand-500/25 scale-110'
                   : isAnsweredQuestion
-                  ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                  ? 'bg-brand-100 text-brand-700 hover:bg-brand-200'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >

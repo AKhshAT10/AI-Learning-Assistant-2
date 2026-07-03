@@ -1,4 +1,7 @@
-export const BASE_URL = "http://localhost:8000";
+// API base URL. In production set VITE_API_URL in your host's env vars
+// (e.g. https://api.yourdomain.com). Falls back to local dev backend.
+export const BASE_URL =
+    import.meta.env.VITE_API_URL?.replace(/\/$/, "") || "http://localhost:8000";
 
 export const API_PATHS = {
     AUTH: {
@@ -35,11 +38,11 @@ export const API_PATHS = {
     },
 
     QUIZZES: {
-    GET_QUIZZES_FOR_DOC: (documentId) => `/api/quizzes/document/${documentId}`,    
-    GET_QUIZ_BY_ID: (id) => `/api/quizzes/${id}`,  // <-- add /quiz/
-    SUBMIT_QUIZ: (id) => `/api/quizzes/${id}/submit`,   // this is fine
-    GET_QUIZ_RESULTS: (id) => `/api/quizzes/${id}/results`, // fine
-    DELETE_QUIZ: (id) => `/api/quizzes/${id}`, // fine
+    GET_QUIZZES_FOR_DOC: (documentId) => `/api/quizzes/document/${documentId}`,
+    GET_QUIZ_BY_ID: (id) => `/api/quizzes/${id}`,
+    SUBMIT_QUIZ: (id) => `/api/quizzes/${id}/submit`,
+    GET_QUIZ_RESULTS: (id) => `/api/quizzes/${id}/results`,
+    DELETE_QUIZ: (id) => `/api/quizzes/${id}`,
 },
 
     PROGRESS: {

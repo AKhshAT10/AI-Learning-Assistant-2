@@ -32,12 +32,12 @@ const DocumentCard = ({document,onDelete}) => {
     };
 
     return (
-        <div className='group relative bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl p-5 hover:border-slate-300/60 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 flex flex-col justify-between cursor-pointer hover:-translate-y-1'
+        <div className='group card card-hover p-5 flex flex-col justify-between'
         onClick={handleNavigate}>
            {/*Header Section*/}
            <div>
             <div className='flex items-start justify-between gap-3 mb-4'>
-               <div className='shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:scale-110 transition-transform duration-300'>
+               <div className='shrink-0 w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-teal rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/25 group-hover:scale-110 transition-transform duration-300'>
                    <FileText className='w-6 h-6 text-white' strokeWidth={2}/>
                </div>
                <button
@@ -67,13 +67,13 @@ const DocumentCard = ({document,onDelete}) => {
                 {document.flashcardCount !== undefined && (
                     <div className='flex items-center gap-1.5 px-2.5 py-1.5 bg-purple-50 rounded-lg'>
                          <BookOpen className='w-3.5 h-3.5 text-purple-600' strokeWidth={2}/>
-                         <span className='text-xs font-semibold text-purple-700'>{document.flashcardCount}Flashcards</span>
+                         <span className='text-xs font-semibold text-purple-700'>{document.flashcardCount} Flashcards</span>
                     </div>
                 )}
                 {document.quizCount !== undefined && (
-                    <div className='flex items-center gap-1.5 px-2.5 py-1.5 bg-emerald-50 rounded-lg'>
-                        <BrainCircuit className='w-3.5 h-3.5 text-emerald-600' strokeWidth={2}/>
-                        <span className='text-xs font-semibold text-emerald-700'>{document.quizCount}Quizzes</span>
+                    <div className='flex items-center gap-1.5 px-2.5 py-1.5 bg-brand-50 rounded-lg'>
+                        <BrainCircuit className='w-3.5 h-3.5 text-brand-600' strokeWidth={2}/>
+                        <span className='text-xs font-semibold text-brand-700'>{document.quizCount} Quizzes</span>
                     </div>
                 )}
             </div>
@@ -88,7 +88,7 @@ const DocumentCard = ({document,onDelete}) => {
            </div>
 
            {/*Hover Indicator*/}
-           <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/5 group-hover:to-teal-500/5 transition-all duration-300 pointer-events-none'/>
+           <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-500/0 to-brand-teal/0 group-hover:from-brand-500/5 group-hover:to-brand-teal/5 transition-all duration-300 pointer-events-none'/>
         </div>
     )
 }

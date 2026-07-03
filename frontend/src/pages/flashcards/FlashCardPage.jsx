@@ -24,7 +24,7 @@ const FlashCardPage = () => {
   const [deleting, setDeleting] = useState(false);
 
   const fetchFlashcards = async () => {
-    setLoading(); 
+    setLoading(true);
     try{
       const response = await flashcardService.getFlashcardsForDocument(documentId);
       setFlashcardSets(response.data[0]);
@@ -33,7 +33,7 @@ const FlashCardPage = () => {
       toast.error("failed to fetch flashcards");
       console.error(error);
     }finally{
-      setLoading();
+      setLoading(false);
     }
   };
 
@@ -138,7 +138,7 @@ const handleToggleStar = async (cardId) => {
               >
               <ChevronLeft size={16}/> Previous
               </Button>
-              <span className='text-sm text-neutral-600'>
+              <span className='text-sm font-medium text-slate-600'>
                  {currentCardIndex+1}/{flashcards.length}
               </span>
               <Button
@@ -159,7 +159,7 @@ const handleToggleStar = async (cardId) => {
        <div className='mb-4'>
             <Link
             to={`/documents/${documentId}`}
-            className='inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-neutral-900 transition-colors'
+            className='inline-flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600 transition-colors'
             >
             <ArrowLeft size={16}/>
             Back to document  
@@ -202,7 +202,7 @@ const handleToggleStar = async (cardId) => {
        title="confirm delete flashcard set"
        >
          <div className='space-y-4'>
-            <p className='text-sm text-neutral-600'>
+            <p className='text-sm text-slate-600'>
               Are your sure you want to delete all flashcards for this document?
               this action cannot be undone
             </p>
@@ -218,7 +218,7 @@ const handleToggleStar = async (cardId) => {
               <Button
               onClick={handleDeleteFlashcardSet}
               disabled={deleting}
-              className='bg-red-500 hover:bg-red-600 active:bg-red-700 focus:ring-red-500'
+              variant="danger"
               >
                {deleting ? "deleting..." : "delete"}
               </Button>
